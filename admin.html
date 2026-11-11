@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Teacher Console</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ff;--card:#fff;--ink:#1d1a3b;--mut:#6a678f;--br:#6c47ff;--br2:#ff6fb1;--ok:#10b981;--wn:#f59e0b;--bad:#ef4444;--ln:#e5e0fb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#14122b;--card:#201d3f;--ink:#f2efff;--mut:#aaa6d3;--ln:#363160;color-scheme:dark}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;background:radial-gradient(900px 500px at 10% -10%,#6c47ff30,transparent),radial-gradient(800px 500px at 100% 0,#ff6fb130,transparent),var(--bg);color:var(--ink);font:600 15px/1.5 Nunito,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+h2,h3,.fd,.btn,.kp b{font-family:Fredoka,Nunito,sans-serif}h3{margin:0 0 12px;font-size:18px}.mut{color:var(--mut);font-weight:600}
+.lg{min-height:100vh;display:grid;place-items:center;padding:20px}.lg form{width:100%;max-width:400px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:22px;padding:20px;box-shadow:0 10px 30px #6c47ff14;margin-bottom:14px}
+.logo{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--br),var(--br2));display:grid;place-items:center;color:#fff;font-size:19px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
+.top>div{max-width:1040px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.top .fd{font-size:18px;font-weight:700;flex:1;min-width:140px;display:flex;align-items:center;gap:10px}
+#who{font-size:13px}
+#tabs{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;max-width:1040px;margin:auto}
+#tabs button{flex:none;font:700 15px Fredoka,sans-serif;border:2px solid var(--ln);background:var(--card);color:var(--ink);border-radius:99px;padding:7px 16px;cursor:pointer}
+#tabs button.on{background:var(--br);border-color:var(--br);color:#fff}
+main{max-width:1040px;margin:auto;padding:16px}
+label{display:block;color:var(--mut);font-size:13px;margin:14px 0 4px}
+input,select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--ln);border-radius:12px;padding:10px 12px}input:focus,select:focus{outline:none;border-color:var(--br)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>input,.row>select{flex:1;min-width:150px;width:auto}.sp{justify-content:space-between;flex-wrap:nowrap}
+.btn{font-size:16px;border:0;border-radius:12px;padding:10px 18px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--br),#8a5cff)}.btn.g{background:var(--card);color:var(--ink);border:2px solid var(--ln)}.btn.r{background:var(--bad)}.btn.big{width:100%;margin-top:16px}.btn.sm{padding:5px 12px;font-size:14px}
+.bd{display:inline-block;padding:3px 10px;border-radius:99px;font-size:13px;font-weight:800;background:var(--bg)}.bd.ok{color:var(--ok);background:#10b98122}.bd.wn{color:var(--wn);background:#f59e0b22}.bd.bad{color:var(--bad);background:#ef444422}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}.kp .card{margin:0;text-align:center;padding:14px;color:var(--mut);font-size:13px}.kp b{display:block;font-size:28px;color:var(--ink)}
+.g2{display:grid;gap:14px}@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}}
+.bars{display:flex;gap:10px;height:170px;align-items:stretch}.bars>div{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0}.bars span{font:700 14px Fredoka}.bars u{flex:1;width:100%;display:flex;align-items:flex-end;text-decoration:none}.bars i{width:100%;border-radius:9px 9px 0 0;background:linear-gradient(180deg,var(--br),var(--br2));min-height:3px}.bars em{font-size:12px;font-style:normal;color:var(--mut)}
+.hb{display:grid;grid-template-columns:minmax(90px,150px) 1fr 46px;gap:10px;align-items:center;margin:9px 0}.hb div,.pg{height:10px;border-radius:9px;background:var(--ln);overflow:hidden}.hb i,.pg i{display:block;height:100%;background:linear-gradient(90deg,var(--br),var(--br2))}.hb b{text-align:right}
+.pg{display:inline-block;width:90px;vertical-align:middle}
+.tw{overflow-x:auto;margin-top:12px}table{border-collapse:collapse;width:100%}th,td{padding:9px 10px;border-bottom:1px solid var(--ln);text-align:left;white-space:nowrap;font-size:14px}th{color:var(--mut);font-size:13px}tr.cl{cursor:pointer}tr.cl:hover{background:var(--bg)}.dt{background:var(--bg);white-space:normal}.chip{display:inline-block;background:var(--card);border:1px solid var(--ln);border-radius:99px;padding:3px 10px;margin:2px 4px 2px 0;font-size:13px}
+.rw{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--ln)}.rw em{color:var(--mut);font-style:normal;font-size:13px}
+.sw{flex:none;width:58px;height:32px;border-radius:99px;border:0;background:var(--ln);position:relative;cursor:pointer}.sw::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}.sw.on{background:var(--ok)}.sw.on::after{left:30px}
+</style></head><body>
+<div class="lg" id="login" hidden>
+ <form class="card" id="lf"><div class="logo" style="margin-bottom:12px">♪</div><h2 style="margin:0">Teacher Console</h2><p class="mut" style="margin:4px 0 0">Sign in to manage the music theory exam.</p>
+  <label for="le">Email</label><input id="le" type="email" autocomplete="username" required>
+  <label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" required>
+  <p id="lm" style="color:var(--bad);margin:10px 0 0;min-height:20px"></p><button class="btn big" style="margin-top:6px">Sign in</button>
+  <p class="mut" style="font-size:12px;margin:14px 0 0">First sign-in? Use the ADMIN_PASSWORD you set in Vercel, then change it under Settings.</p></form>
+</div>
+<div id="app" hidden>
+ <div class="top"><div><span class="fd"><span class="logo">♪</span>Teacher Console</span><span class="bd" id="pill"></span><span class="mut" id="who"></span><button class="btn g sm" id="out">Sign out</button></div>
+ <nav id="tabs"><button data-t="ov">Overview</button><button data-t="lv">Live</button><button data-t="rs">Results</button><button data-t="ex">Exam</button><button data-t="st">Settings</button></nav></div>
+ <main id="v"></main>
+</div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mm=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,"0")}`,NQ=18;
+const api=async(a,b)=>{const r=await fetch("/api/cbt?a="+a,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})});const j=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(j.error||"Request failed");e.status=r.status;throw e}return j};
+let D=null,T="ov",Q="",C="",pl=null;const OP=new Set();
+const now=()=>D.now+Date.now()-D.t,subs=()=>D.rows.filter(r=>r.submitted_at),live=()=>D.rows.filter(r=>!r.submitted_at&&now()-new Date(r.started_at)<(D.s.minutes+2)*6e4);
+const ago=t=>{const s=Math.max(0,Math.round((now()-new Date(t))/1e3));return s<60?s+"s ago":s<3600?Math.round(s/60)+"m ago":s<86400?Math.round(s/3600)+"h ago":Math.round(s/86400)+"d ago"};
+const topics=rows=>{const t={};rows.forEach(r=>(r.detail||[]).forEach(([c,o])=>{const x=t[c]||(t[c]=[0,0]);x[0]+=o;x[1]++}));return Object.entries(t).map(([c,[o,n]])=>[c,Math.round(o/n*100)]).sort((a,b)=>a[1]-b[1])};
+const bars=(l,v)=>{const m=Math.max(1,...v);return `<div class="bars">${v.map((x,i)=>`<div><span>${x}</span><u><i style="height:${x/m*100}%"></i></u><em>${l[i]}</em></div>`).join("")}</div>`};
+const V={
+ov(){const S=subs(),n=S.length,avg=n?Math.round(S.reduce((a,r)=>a+r.pct,0)/n):0,mx=n?Math.max(...S.map(r=>r.pct)):0,ps=n?Math.round(S.filter(r=>r.pct>=50).length/n*100):0,tm=n?S.reduce((a,r)=>a+r.used,0)/n:0,lost=D.rows.length-n-live().length;
+ const bins=[0,0,0,0,0];S.forEach(r=>bins[Math.min(4,Math.floor(r.pct/20))]++);
+ const days=[...Array(7)].map((_,i)=>{const d=new Date(now()-(6-i)*864e5);return[d.toLocaleDateString(undefined,{weekday:"short"}),S.filter(r=>new Date(r.submitted_at).toDateString()===d.toDateString()).length]});
+ return `<div class="kp">${[["Submitted",n],["Taking now",live().length],["Average",avg+"%"],["Highest",mx+"%"],["Pass rate (50%+)",ps+"%"],["Average time",mm(tm)],["Not finished",lost]].map(([l,v])=>`<div class="card"><b>${v}</b>${l}</div>`).join("")}</div>
+ <div class="g2"><div class="card"><h3>Score spread (%)</h3>${bars(["0–19","20–39","40–59","60–79","80–100"],bins)}</div><div class="card"><h3>Submissions, last 7 days</h3>${bars(days.map(d=>d[0]),days.map(d=>d[1]))}</div></div>
+ <div class="card"><h3>Performance by topic <span class="mut" style="font-size:13px">weakest first</span></h3>${topics(S).map(([c,p])=>`<div class="hb"><span>${esc(c)}</span><div><i style="width:${p}%"></i></div><b>${p}%</b></div>`).join("")||`<p class="mut">Topic scores appear after the first submission.</p>`}</div>`},
+lv(){const L=live();return `<div class="card"><h3>Taking the exam now (${L.length})</h3><div class="tw"><table><thead><tr><th>Student</th><th>Class</th><th>Progress</th><th>Time left</th><th>Status</th></tr></thead><tbody>${L.map(r=>{const left=Math.max(0,D.s.minutes*60-(now()-new Date(r.started_at))/1e3),seen=r.last_seen?(now()-new Date(r.last_seen))/1e3:999,on=seen<50;return `<tr><td>${esc(r.name)}</td><td>${esc(r.cls)}</td><td><span class="pg"><i style="width:${Math.min(100,r.answered/NQ*100)}%"></i></span> ${r.answered}/${NQ}</td><td>${mm(left)}</td><td><span class="bd ${on?"ok":"wn"}">${on?"● online":"○ no signal"}</span></td></tr>`}).join("")||`<tr><td colspan="5" class="mut">Nobody is taking the exam right now.</td></tr>`}</tbody></table></div><p class="mut" style="font-size:12px;margin:10px 0 0">Updates every 10 seconds. "No signal" means the student's device has not checked in for about a minute.</p></div>
+ <div class="card"><h3>Just finished</h3>${subs().slice(0,6).map(r=>`<div class="rw"><span>${esc(r.name)}</span><b>${r.score}/${r.total} · ${r.pct}%</b><em>${ago(r.submitted_at)}</em></div>`).join("")||`<p class="mut">No submissions yet.</p>`}</div>`},
+rs(){const cl=[...new Set(subs().map(r=>r.cls).filter(Boolean))].sort();return `<div class="card"><div class="row"><input id="q" placeholder="Search name or class" value="${esc(Q)}"><select id="cf"><option value="">All classes</option>${cl.map(c=>`<option ${c===C?"selected":""}>${esc(c)}</option>`).join("")}</select><button class="btn g" id="csv">Export CSV</button></div><div class="tw" id="rt"></div></div>`},
+ex(){const s=D.s;return `<div class="card"><div class="row sp"><div><h3 style="margin:0">Exam access</h3><p class="mut" style="margin:2px 0 0">${s.open?"Students can start the exam now.":"Students cannot start the exam."}</p></div><button class="sw${s.open?" on":""}" id="sw" aria-label="Open or close the exam"></button></div>
+ <label>Exam code (students type this to begin)</label><div class="row"><input id="cd" value="${esc(s.code)}" autocomplete="off"><button class="btn g" id="gen">Generate</button></div>
+ <label>Duration (minutes)</label><input id="mn" type="number" min="1" max="180" value="${s.minutes}">
+ <label>Link to give students</label><div class="row"><input id="lk" readonly value="${esc(location.origin)}"><button class="btn g" id="cp">Copy</button></div>
+ <button class="btn big" id="sv">Save changes</button><p class="mut" id="ms" style="margin:10px 0 0"></p></div>`},
+st(){return `<div class="card"><h3>Your login</h3><label>Email</label><input id="ae" type="email" value="${esc(D.email)}"><label>New password (leave blank to keep the current one)</label><input id="ap" type="password" autocomplete="new-password"><label>Current password (required)</label><input id="ac" type="password" autocomplete="current-password"><button class="btn big" id="sa">Update login</button><p class="mut" id="am" style="margin:10px 0 0"></p></div>
+ <div class="card"><h3>Danger zone</h3><p class="mut" style="margin-top:0">Permanently delete every attempt and result.</p><div class="row"><input id="dz" placeholder="Type DELETE"><button class="btn r" id="pg">Delete all</button></div></div>`}};
+const head=()=>{$("#pill").className="bd "+(D.s.open?"ok":"bad");$("#pill").textContent=D.s.open?"● Exam open":"○ Exam closed";$("#who").textContent=D.email};
+const paintRs=()=>{const el=$("#rt");if(!el)return;const rows=subs().filter(r=>(!C||r.cls===C)&&(!Q||(r.name+" "+(r.cls||"")).toLowerCase().includes(Q.toLowerCase())));
+ el.innerHTML=`<table><thead><tr><th>Name</th><th>Class</th><th>Score</th><th>%</th><th>Time</th><th>Finished</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr class="cl" data-id="${r.id}"><td>${esc(r.name)}</td><td>${esc(r.cls)}</td><td>${r.score}/${r.total}</td><td><span class="bd ${r.pct>=70?"ok":r.pct>=50?"wn":"bad"}">${r.pct}%</span></td><td>${mm(r.used)}</td><td>${new Date(r.submitted_at).toLocaleString()}</td><td>${r.late?"⚠ late":r.auto?"⏱ auto":""}</td></tr>${OP.has(r.id)?`<tr><td colspan="7" class="dt">${topics([r]).map(([c,p])=>`<span class="chip">${esc(c)} ${p}%</span>`).join("")||"No topic data."} <button class="btn r sm" data-del="${r.id}">Delete</button></td></tr>`:""}`).join("")||`<tr><td colspan="7" class="mut">No results match.</td></tr>`}</tbody></table>`};
+const render=()=>{head();$("#v").innerHTML=V[T]();if(T==="rs")paintRs();document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===T))};
+const showLogin=()=>{clearInterval(pl);$("#app").hidden=true;$("#login").hidden=false};
+const load=async()=>{D=await api("dash");D.t=Date.now()};
+const refresh=async()=>{try{await load();if(T==="ov"||T==="lv")render();else{head();if(T==="rs")paintRs()}}catch(e){if(e.status===401)showLogin()}};
+const begin=async()=>{try{await load();$("#login").hidden=true;$("#app").hidden=false;render();clearInterval(pl);pl=setInterval(()=>!document.hidden&&refresh(),1e4)}catch(e){showLogin();if(e.status!==401)$("#lm").textContent=e.message}};
+const saveS=async o=>{const m=$("#ms");try{const r=await api("settings",{open:D.s.open,code:$("#cd")?.value,minutes:$("#mn")?.value,...o});D.s=r.s;render();$("#ms").textContent="Saved ✓"}catch(e){if(m)m.textContent=e.message}};
+const csv=()=>{const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;const t=["Name,Class,Score,Total,Percent,Seconds used,Finished,Late,Auto-submitted",...subs().map(r=>[r.name,r.cls,r.score,r.total,r.pct,r.used,r.submitted_at,r.late,r.auto].map(q).join(","))].join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/csv"}));a.download="music-theory-results.csv";a.click()};
+$("#lf").onsubmit=async e=>{e.preventDefault();$("#lm").textContent="";try{await api("login",{email:$("#le").value,password:$("#lp").value});$("#lp").value="";begin()}catch(x){$("#lm").textContent=x.message}};
+$("#out").onclick=()=>api("logout").finally(showLogin);
+$("#tabs").onclick=e=>{const b=e.target.closest("button");if(b){T=b.dataset.t;render()}};
+$("#v").oninput=e=>{if(e.target.id==="q"){Q=e.target.value;paintRs()}if(e.target.id==="cf"){C=e.target.value;paintRs()}};
+$("#v").onclick=async e=>{const t=e.target,id=t.id,del=t.closest("[data-del]"),tr=t.closest("tr.cl");
+ if(del){if(confirm("Delete this result?"))api("delete",{id:del.dataset.del}).then(refresh);return}
+ if(tr){const i=tr.dataset.id;OP.has(i)?OP.delete(i):OP.add(i);paintRs();return}
+ if(id==="csv")csv();if(id==="sw")saveS({open:!D.s.open});if(id==="sv")saveS();
+ if(id==="gen"){const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";$("#cd").value=Array.from({length:6},()=>A[Math.floor(Math.random()*A.length)]).join("")}
+ if(id==="cp"){try{await navigator.clipboard.writeText($("#lk").value);t.textContent="Copied ✓"}catch(x){$("#lk").select()}}
+ if(id==="sa"){try{const r=await api("account",{email:$("#ae").value,password:$("#ap").value,current:$("#ac").value});D.email=r.email;render();$("#am").textContent="Login updated ✓"}catch(x){$("#am").textContent=x.message}}
+ if(id==="pg"){try{if($("#dz").value!=="DELETE")throw new Error("Type DELETE to confirm.");await api("purge",{confirm:"DELETE"});await load();render()}catch(x){alert(x.message)}}};
+begin();
+</script></body></html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Music Theory Exam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ff;--card:#fff;--ink:#1d1a3b;--mut:#6a678f;--br:#6c47ff;--br2:#ff6fb1;--ok:#10b981;--wn:#f59e0b;--bad:#ef4444;--ln:#e5e0fb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14122b;--card:#201d3f;--ink:#f2efff;--mut:#aaa6d3;--ln:#363160;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#14122b;--card:#201d3f;--ink:#f2efff;--mut:#aaa6d3;--ln:#363160;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:radial-gradient(900px 500px at 10% -10%,#6c47ff33,transparent),radial-gradient(800px 500px at 100% 0,#ff6fb133,transparent),var(--bg);color:var(--ink);font:600 16px/1.5 Nunito,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+h1,h2,h3,.fd{font-family:Fredoka,Nunito,sans-serif;margin:0}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
+.top div{max-width:860px;margin:auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font:700 17px Fredoka,sans-serif}.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--br),var(--br2));display:grid;place-items:center;color:#fff;font-size:18px}
+#timer{font:700 20px Fredoka,monospace;padding:6px 14px;border-radius:99px;background:var(--card);border:2px solid var(--ln);min-width:96px;text-align:center}
+#timer.w{border-color:var(--wn);color:var(--wn)}#timer.c{border-color:var(--bad);color:var(--bad);animation:p 1s infinite}@keyframes p{50%{opacity:.55}}
+main{max-width:860px;margin:auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:24px;padding:22px;box-shadow:0 10px 30px #6c47ff14}
+.hero{text-align:center}.hero h1{font-size:clamp(26px,6vw,40px);line-height:1.15;margin:8px 0}.mut{color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0}.chip{background:var(--bg);border:1px solid var(--ln);border-radius:99px;padding:5px 12px;font-size:14px}
+label{display:block;text-align:left;font-size:14px;color:var(--mut);margin:12px 0 4px}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--ln);border-radius:14px;padding:12px 14px}input:focus,textarea:focus{outline:none;border-color:var(--br)}
+.btn{font:700 17px Fredoka,sans-serif;border:0;border-radius:14px;padding:13px 22px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--br),#8a5cff);box-shadow:0 6px 16px #6c47ff44}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}.btn.g{background:var(--card);color:var(--ink);border:2px solid var(--ln);box-shadow:none}.btn.r{background:var(--bad);box-shadow:none}.btn.big{width:100%;margin-top:18px}
+.bar{height:8px;background:var(--ln);border-radius:9px;overflow:hidden;margin-bottom:14px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--br),var(--br2));transition:width .3s}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;color:var(--mut)}.cat{background:#6c47ff1f;color:var(--br);padding:3px 11px;border-radius:99px;font-weight:800}
+#qt{font-size:clamp(19px,4.5vw,24px);line-height:1.35;margin:12px 0}
+#fig{background:var(--bg);border:1px solid var(--ln);border-radius:18px;padding:8px;margin:10px 0 16px;text-align:center}
+.staff{width:100%;max-width:460px;height:auto}.staff line{stroke:var(--ink);stroke-width:1.4;opacity:.8}.staff path{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.staff .f{fill:var(--ink);stroke:none}
+.staff .nt{fill:var(--card);stroke:var(--br);stroke-width:2.8}.staff text{fill:var(--ink);font:700 19px Fredoka,sans-serif;text-anchor:middle}.staff .sm{font-size:12px;fill:var(--mut)}
+#opts{display:grid;gap:10px}@media(min-width:620px){#opts{grid-template-columns:1fr 1fr}}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;font:700 17px Nunito,sans-serif;color:var(--ink);background:var(--card);border:2px solid var(--ln);border-radius:16px;padding:13px 14px;cursor:pointer;transition:.15s}
+.opt b{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--bg);font-family:Fredoka}.opt:hover{border-color:var(--br)}
+.opt.sel{border-color:var(--br);background:#6c47ff18}.opt.sel b{background:var(--br);color:#fff}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+#grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}#grid button{width:38px;height:38px;border-radius:11px;border:2px solid var(--ln);background:var(--card);color:var(--ink);font:700 15px Fredoka;cursor:pointer}
+#grid .a{background:var(--br);border-color:var(--br);color:#fff}#grid .cu{outline:3px solid var(--br2);outline-offset:2px}
+.ring{--p:0;width:170px;height:170px;border-radius:50%;margin:10px auto;display:grid;place-items:center;background:conic-gradient(var(--br) calc(var(--p)*1%),var(--ln) 0)}
+.ring div{width:134px;height:134px;border-radius:50%;background:var(--card);display:grid;place-items:center;font:700 34px Fredoka}.ring small{display:block;font-size:14px;color:var(--mut);text-align:center}
+.modal{position:fixed;inset:0;background:#0009;display:grid;place-items:center;padding:20px;z-index:20}.modal[hidden]{display:none}.modal .card{max-width:420px;text-align:center}.modal .nav{justify-content:center}
+.st{padding:10px 14px;border-radius:14px;background:var(--bg);font-size:14px;margin:10px 0}.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:9px 10px;border-bottom:1px solid var(--ln);text-align:left;white-space:nowrap}th{color:var(--mut)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}.stats div{background:var(--bg);border-radius:14px;padding:12px;text-align:center}.stats b{display:block;font:700 24px Fredoka}
+a{color:var(--br)}[hidden]{display:none!important}
+</style></head><body>
+<div class="top"><div><span class="brand"><span class="logo">♪</span><span id="sch"></span></span><span id="timer" hidden>30:00</span></div></div>
+<main>
+<section id="start" class="card hero">
+ <svg viewBox="0 0 330 120" class="staff" id="deco" aria-hidden="true"></svg>
+ <h1>Music Theory Exam</h1><p class="mut" style="margin:0">Show what you know about the staff, clefs and note names.</p>
+ <div class="chips"><span class="chip">⏱ <span id="cm"></span> minutes</span><span class="chip">📝 <span id="cn"></span> questions</span><span class="chip">✅ Auto-submits at 0:00</span></div>
+ <label for="nm">Your full name</label><input id="nm" autocomplete="name" placeholder="e.g. Chioma Okafor">
+ <label for="cl">Class / level (optional)</label><input id="cl" placeholder="e.g. Beginner A">
+ <label for="cd">Exam code (from your teacher)</label><input id="cd" autocomplete="off" placeholder="Enter the code">
+ <p id="er" style="color:var(--bad);font-size:14px;margin:8px 0 0" hidden></p>
+ <button class="btn big" id="go" disabled>Start exam ▶</button>
+ <p class="mut" style="font-size:13px;margin:14px 0 0">Once you press start, the clock does not stop. Good luck!</p>
+</section>
+<section id="exam" hidden>
+ <div class="bar"><i id="pb"></i></div>
+ <div class="card">
+  <div class="meta"><span id="qn"></span><span class="cat" id="cat"></span></div>
+  <h2 id="qt"></h2><div id="fig"></div><div id="opts"></div>
+  <div class="nav"><button class="btn g" id="pv">◀ Back</button><button class="btn" id="nx">Next ▶</button></div>
+ </div>
+ <div class="card" style="margin-top:14px"><div class="meta"><span>Jump to a question</span><button class="btn r" id="sb" style="padding:9px 16px;font-size:15px">Submit exam</button></div><div id="grid"></div></div>
+</section>
+<section id="done" class="card hero" hidden>
+ <h1 id="dh"></h1><div class="ring" id="rg"><div><span id="dp"></span></div></div>
+ <p class="fd" style="font-size:22px;margin:0" id="ds"></p><p class="mut" id="dm"></p>
+ <div class="st" id="sv"></div>
+ <label for="slip">Result slip (send this to your teacher if asked)</label><textarea id="slip" rows="4" readonly></textarea>
+ <button class="btn g big" id="cp">Copy result slip</button>
+</section>
+</main>
+<div class="modal" id="cf" hidden><div class="card"><h2>Submit your exam?</h2><p class="mut" id="cw"></p><div class="nav"><button class="btn g" id="no">Keep going</button><button class="btn r" id="yes">Yes, submit</button></div></div></div>
+<script>
+const CFG={school:"Curatone Music Academy",minutes:15,N:18};
+const $=s=>document.querySelector(s),R=n=>Math.floor(Math.random()*n),L="CDEFGAB";
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=R(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ST={treble:2,bass:4,alto:3,tenor:1},NM={treble:"Treble clef",bass:"Bass clef",alto:"Alto clef",tenor:"Tenor clef"};
+const let_=(c,p)=>L[(ST[c]+p)%7];
+const cc=y=>`<rect x="3" y="0" width="5" height="48" class="f"/><rect x="11" y="0" width="1.8" height="48" class="f"/><path d="M13,${y-2}C21,${y-2} 25,${y-7} 24,${y-13}"/><path d="M13,${y+2}C21,${y+2} 25,${y+7} 24,${y+13}"/><circle cx="24" cy="${y-13}" r="2.4" class="f"/><circle cx="24" cy="${y+13}" r="2.4" class="f"/>`;
+const CL={treble:`<path d="M17,60C17,67 8,66 9,60C10,55 17,56 17,49C17,40 14,20 14,10C14,-2 20,-10 24,-8C28,-5 24,8 17,18C10,28 4,34 6,42C8,50 20,52 24,44C27,37 21,30 15,32C10,34 11,41 16,41"/>`,
+bass:`<circle cx="9" cy="12" r="3.6" class="f"/><path d="M9,13C18,5 27,10 26,19C25,30 14,40 4,46"/><circle cx="33" cy="6" r="2" class="f"/><circle cx="33" cy="18" r="2" class="f"/>`,alto:cc(24),tenor:cc(12)};
+function staff(o){const T=34,W=330;let s=`<svg viewBox="0 0 ${W} 124" class="staff" role="img" aria-label="Music staff">`;
+ for(let i=0;i<5;i++)s+=`<line x1="6" x2="${W-6}" y1="${T+i*12}" y2="${T+i*12}"/>`;
+ s+=`<line x1="6" x2="6" y1="${T}" y2="${T+48}"/>`;if(o.clef)s+=`<g transform="translate(20 ${T})">${CL[o.clef]}</g>`;
+ const n=o.notes||[];n.forEach((k,i)=>{const x=n.length>1?105+i*62:190,y=T+48-k.p*6;
+  s+=`<ellipse class="nt" cx="${x}" cy="${y}" rx="8.5" ry="5.8" transform="rotate(-20 ${x} ${y})"/>`;
+  if(k.t)s+=`<text x="${x}" y="${T+82}">${k.t}</text><text class="sm" x="${x}" y="${T+104}">${i+1}</text>`});
+ return s+"</svg>"}
+const Q=(cat,q,ok,bad,svg,keep)=>{const o=keep?[ok,...bad].sort():shuf([ok,...bad]);return{cat,q,svg,o,a:o.indexOf(ok)}};
+const oth=(a,x,n=3)=>shuf(a.filter(v=>v!==x)).slice(0,n);
+const seq=(c,t)=>[0,1,2,3,4,5,6,7,8].filter(p=>p%2===(t==="lines"?0:1)).map(p=>let_(c,p)).join(" ");
+const SEQS=[["treble","lines"],["treble","spaces"],["bass","lines"],["bass","spaces"]];
+const nl=c=>()=>{const p=R(9),l=let_(c,p);return Q("Letter names","What is the letter name of this note?",l,oth([...L],l),staff({clef:c,notes:[{p}]}))};
+const cn=()=>{const c=["alto","tenor"][R(2)],p=R(9),l=let_(c,p);return Q("C clefs","This is a C clef. What is the letter name of the note?",l,oth([...L],l),staff({clef:c,notes:[{p}]}))};
+const sq=([c,t])=>()=>{const ok=seq(c,t);return Q("Letter names",`The letter names of the ${t} of the ${c} clef, from bottom to top, are:`,ok,oth(SEQS.map(x=>seq(...x)),ok))};
+const idc=c=>()=>Q("Clefs","Name this clef.",NM[c],oth(Object.values(NM),NM[c]),staff({clef:c}));
+const ls=()=>{const c=["treble","bass"][R(2)],p=R(9);return Q("The staff","Is this note on a line or in a space?",p%2?"In a space":"On a line",[p%2?"On a line":"In a space"],staff({clef:c,notes:[{p}]}))};
+const lab=()=>{const c=["treble","bass"][R(2)],ps=shuf([0,1,2,3,4,5,6,7,8]).slice(0,4),bad=R(10)<6?R(4):-1;
+ const notes=ps.map((p,i)=>({p,t:i===bad?oth([...L],let_(c,p),1)[0]:let_(c,p)})),svg=staff({clef:c,notes});
+ if(bad<0)return Q("Spot the mistake","Are all the letter names on this staff correct?","Yes, all are correct",["No, one is wrong"],svg);
+ return R(2)?Q("Spot the mistake","Are all the letter names on this staff correct?","No, one is wrong",["Yes, all are correct"],svg):Q("Spot the mistake","One letter name is wrong. Which note has it?","Note "+(bad+1),["Note 1","Note 2","Note 3","Note 4"].filter(x=>x!=="Note "+(bad+1)),svg,1)};
+const PLAN=[[2,[()=>Q("What is music?","What is music?","A combination of sounds that is pleasant to the ear",["Any loud noise we hear","Only the words of a song","Writing on a piece of paper"]),
+ ()=>Q("What is music?","Music is a combination of ______ that is pleasant to the ear.","sounds",["colours","pictures","smells"]),
+ ()=>Q("What is music?","Which of these is made when we put sounds together in a pleasant way?","Music",["Silence","Noise","Shouting"])]],
+ [3,[()=>Q("The staff","What is this called?","The staff",["The clef","The bar line","The note"],staff({})),()=>Q("The staff","How many lines does a staff have?","5",["3","4","6"]),
+ ()=>Q("The staff","How many spaces does a staff have?","4",["3","5","6"]),()=>Q("The staff","We count the lines and spaces of the staff from the…","Bottom to top",["Top to bottom","Left to right","Middle outwards"]),ls]],
+ [4,[idc("treble"),idc("bass"),idc("alto"),idc("tenor"),()=>Q("Clefs","Which clef is also called the G clef?","Treble clef",["Bass clef","Alto clef","Tenor clef"]),
+ ()=>Q("Clefs","Which clef is also called the F clef?","Bass clef",["Treble clef","Alto clef","Tenor clef"]),()=>Q("Clefs","What does a clef tell us?","The letter names of the lines and spaces",["How loud to play","How fast to play","How many beats are in a bar"])]],
+ [3,[()=>Q("C clefs","Which clef has its centre on the middle (3rd) line?","Alto clef",["Tenor clef","Treble clef","Bass clef"]),()=>Q("C clefs","Which clef has its centre on the 4th line from the bottom?","Tenor clef",["Alto clef","Treble clef","Bass clef"]),
+ ()=>Q("C clefs","Alto and tenor are both called ___ clefs.","C",["G","F","B"]),()=>{const c=["alto","tenor"][R(2)],ok=c==="alto"?"The middle (3rd) line":"The 4th line";return Q("C clefs","Which line does the centre of this C clef point to?",ok,oth(["The middle (3rd) line","The 4th line","The 1st (bottom) line","The 5th (top) line"],ok),staff({clef:c}))},cn,cn]],
+ [4,[nl("treble"),nl("bass"),nl("treble"),nl("bass"),...SEQS.map(sq)]],[2,[lab,lab,lab]]];
+const build=()=>shuf(PLAN.flatMap(([n,f])=>shuf(f).slice(0,n).map(g=>g())));
+let S=null,tm=null,hb=null;const KEY="cbt-active";
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const show=id=>["start","exam","done"].forEach(x=>$("#"+x).hidden=x!==id);
+const mmss=s=>`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
+function route(){if(S&&!S.done){show("exam");$("#timer").hidden=false;render();tick()}else if(!S||!S.done){show("start");$("#timer").hidden=true}}
+const api=async(a,body,pw)=>{const r=await fetch("/api/cbt?a="+a,{method:"POST",headers:{"Content-Type":"application/json",...(pw?{"x-admin":pw}:{})},body:JSON.stringify(body||{})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Could not connect. Check your internet and try again.");return j};
+async function begin(){const b=$("#go"),er=$("#er"),nm=$("#nm").value.trim(),cl=$("#cl").value.trim();er.hidden=true;b.disabled=true;b.textContent="Checking…";
+ try{const r=await api("start",{name:nm,cls:cl,code:$("#cd").value.trim()});S={id:r.id,name:nm,cls:cl,qs:build(),ans:[],i:0,t0:Date.now(),end:Date.now()+r.minutes*6e4,done:false};save();route();window.scrollTo(0,0)}
+ catch(e){er.textContent=e.message;er.hidden=false}b.disabled=false;b.textContent="Start exam ▶"}
+function render(){const q=S.qs[S.i],n=S.qs.length;$("#qn").textContent=`Question ${S.i+1} of ${n}`;$("#cat").textContent=q.cat;$("#qt").textContent=q.q;
+ $("#fig").innerHTML=q.svg||"";$("#fig").hidden=!q.svg;
+ $("#opts").innerHTML=q.o.map((t,k)=>`<button class="opt${S.ans[S.i]===k?" sel":""}" data-k="${k}"><b>${"ABCD"[k]}</b><span>${esc(t)}</span></button>`).join("");
+ $("#pv").disabled=S.i===0;$("#nx").disabled=S.i===n-1;
+ const done=S.qs.filter((_,i)=>S.ans[i]!=null).length;$("#pb").style.width=done/n*100+"%";
+ $("#grid").innerHTML=S.qs.map((_,i)=>`<button data-i="${i}" class="${S.ans[i]!=null?"a ":""}${i===S.i?"cu":""}">${i+1}</button>`).join("")}
+const ping=()=>S&&!S.done&&S.id&&api("ping",{id:S.id,answered:S.ans.filter(x=>x!=null).length}).catch(()=>{});
+function tick(){clearInterval(tm);clearInterval(hb);ping();hb=setInterval(ping,2e4);const f=()=>{const r=Math.max(0,Math.ceil((S.end-Date.now())/1e3)),t=$("#timer");t.textContent=mmss(r);t.className=r<60?"c":r<300?"w":"";if(r<=0){clearInterval(tm);finish(true)}};f();tm=setInterval(f,500)}
+async function finish(auto){if(!S||S.done)return;S.done=true;clearInterval(tm);clearInterval(hb);$("#cf").hidden=true;try{localStorage.removeItem(KEY)}catch(e){}
+ const score=S.qs.filter((q,i)=>S.ans[i]===q.a).length,tot=S.qs.length,pct=Math.round(score/tot*100),used=Math.min(Math.round((Date.now()-S.t0)/1e3),CFG.minutes*60);
+ const r={name:S.name,cls:S.cls,score,total:tot,pct,used,at:Date.now(),auto:!!auto};
+ show("done");$("#timer").hidden=true;$("#dh").textContent=auto?"Time's up!":"Exam submitted!";$("#rg").style.setProperty("--p",pct);$("#dp").innerHTML=`${pct}%`;
+ $("#ds").textContent=`${score} out of ${tot} correct`;$("#dm").textContent=pct>=70?"Excellent work, "+S.name.split(" ")[0]+"! 🎉":pct>=50?"Good job — keep practising! 🎵":"Keep learning — you will get there! 💪";
+ const code="CBT1:"+btoa(unescape(encodeURIComponent(JSON.stringify(r))));
+ $("#slip").value=`${CFG.school} – Music Theory Exam\nName: ${S.name}${S.cls?" ("+S.cls+")":""}\nScore: ${score}/${tot} (${pct}%)\n${code}`;
+ $("#sv").textContent="Saving your result…";let ok=false;
+ try{await api("submit",{id:S.id,score,total:tot,auto:!!auto,detail:S.qs.map((q,i)=>[q.cat,S.ans[i]===q.a?1:0])});ok=true}catch(e){}
+ $("#sv").textContent=ok?"✅ Your result has been sent to your teacher.":"ℹ️ Please copy the result slip below and send it to your teacher."}
+$("#sch").textContent=CFG.school;api("info").then(j=>{CFG.minutes=j.minutes;$("#cm").textContent=j.minutes;if(!j.open){$("#er").textContent="The exam is closed right now. Your teacher will tell you when it opens.";$("#er").hidden=false}}).catch(()=>{});$("#cm").textContent=CFG.minutes;$("#cn").textContent=CFG.N;
+$("#deco").innerHTML=staff({clef:"treble",notes:[{p:0},{p:2},{p:4},{p:6}]}).replace(/^<svg[^>]*>|<\/svg>$/g,"");
+const chk=()=>$("#go").disabled=$("#nm").value.trim().length<2||!$("#cd").value.trim();$("#nm").oninput=chk;$("#cd").oninput=chk;$("#go").onclick=begin;
+$("#opts").onclick=e=>{const b=e.target.closest(".opt");if(!b)return;S.ans[S.i]=+b.dataset.k;save();render()};
+$("#grid").onclick=e=>{const b=e.target.closest("button");if(b){S.i=+b.dataset.i;save();render()}};
+$("#pv").onclick=()=>{S.i--;save();render()};$("#nx").onclick=()=>{S.i++;save();render()};
+$("#sb").onclick=()=>{const u=S.qs.length-S.ans.filter(x=>x!=null).length;$("#cw").textContent=u?`You still have ${u} unanswered question${u>1?"s":""}.`:"You have answered every question.";$("#cf").hidden=false};
+$("#no").onclick=()=>$("#cf").hidden=true;$("#yes").onclick=()=>finish(false);
+$("#cp").onclick=async()=>{const t=$("#slip");try{await navigator.clipboard.writeText(t.value);$("#cp").textContent="Copied ✓"}catch(e){t.select()}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&!s.done)S=s}catch(e){}
+route();
+</script></body></html>
